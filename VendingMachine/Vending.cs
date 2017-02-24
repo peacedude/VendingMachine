@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 
 namespace VendingMachine
 {
-    class Vending
+    public class Vending
     {
 
-        private const int NUMBER_OF_DRINKS = 4;
-        private const int NUMBER_OF_FOOD = 5;
+        private const int NumberOfDrinks = 4;
+        private const int NumberOfFood = 5;
         private int Money { get; set; }
-        private bool vendLoop { get; set; }
-        private bool buyLoop { get; set; }
-        private bool waitForEntry { get; set; }
+        private bool VendLoop { get; set; }
+        private bool BuyLoop { get; set; }
+        private bool WaitForEntry { get; set; }
 
-        int[] acceptedAmount = new int[] { 1, 5, 10, 20, 50, 100, 500, 1000 };
+        private readonly int[] _acceptedAmount = new int[] { 1, 5, 10, 20, 50, 100, 500, 1000 };
 
-        Product[] stock = new Product[8];
+        private readonly IProduct[] _stock;
 
         public Vending()
         {
@@ -38,14 +38,14 @@ namespace VendingMachine
 
             var sten = new Stuff("Sten", "Vanlig sten", 20, 1);
             var diamant = new Stuff("Diamant", "Dyr sten", 10, 9999);
-            stock = new Product[] { cola, fanta, pepsi, zingo, baguette, kycklingspett, rakburk, smorgastarta, paj, sten, diamant };
+            _stock = new IProduct[] { cola, fanta, pepsi, zingo, baguette, kycklingspett, rakburk, smorgastarta, paj, sten, diamant };
         }
 
 
         public void BuyMenu()
         {
-            buyLoop = true;
-            while (buyLoop == true)
+            BuyLoop = true;
+            while (BuyLoop)
             {
                 StockMenu();
                 SelectItem();
@@ -58,20 +58,20 @@ namespace VendingMachine
             Console.WriteLine("***********************");
             Console.WriteLine("*    You got {0,-9:C0}*", Money);
             Console.WriteLine("************************************************************************");
-            for (int i = 0; i < stock.Length - NUMBER_OF_FOOD; i++)
+            for (var i = 0; i < _stock.Length - NumberOfFood; i++)
             {
-                Console.WriteLine("*{0}. {1,-20} Price: {2,-10:C0} Available: {3,-5} You have: {4}*", i + 1, stock[i].name, stock[i].price, stock[i].storeStock, stock[i].personalStock);
+                Console.WriteLine("*{0}. {1,-20} Price: {2,-10:C0} Available: {3,-5} You have: {4}*", i + 1, _stock[i].Name, _stock[i].Price, _stock[i].StoreStock, _stock[i].PersonalStock);
             }
             Console.WriteLine("************************************************************************");
-            for (int i = NUMBER_OF_DRINKS; i < NUMBER_OF_FOOD + NUMBER_OF_DRINKS; i++)
+            for (var i = NumberOfDrinks; i < NumberOfFood + NumberOfDrinks; i++)
             {
-                Console.WriteLine("*{0}. {1,-20} Price: {2,-10:C0} Available: {3,-5} You have: {4}*", i + 1, stock[i].name, stock[i].price, stock[i].storeStock, stock[i].personalStock);
+                Console.WriteLine("*{0}. {1,-20} Price: {2,-10:C0} Available: {3,-5} You have: {4}*", i + 1, _stock[i].Name, _stock[i].Price, _stock[i].StoreStock, _stock[i].PersonalStock);
             }
             Console.WriteLine("************************************************************************");
-            int n = NUMBER_OF_FOOD + NUMBER_OF_DRINKS;
-            for (int i = n; i < stock.Length; i++)
+            var n = NumberOfFood + NumberOfDrinks;
+            for (var i = n; i < _stock.Length; i++)
             {
-                Console.WriteLine("*{0}. {1,-19} Price: {2,-10:C0} Available: {3,-5} You have: {4}*", i + 1, stock[i].name, stock[i].price, stock[i].storeStock, stock[i].personalStock);
+                Console.WriteLine("*{0}. {1,-19} Price: {2,-10:C0} Available: {3,-5} You have: {4}*", i + 1, _stock[i].Name, _stock[i].Price, _stock[i].StoreStock, _stock[i].PersonalStock);
             }
             Console.WriteLine("************************************************************************");
         }
@@ -88,11 +88,11 @@ namespace VendingMachine
 
         public void SelectItem()
         {
-            int o = -1;
             Console.Write("Enter your selection. Type '0' to leave: ");
 
             while (true)
             {
+                int o;
                 try
                 {
                     o = int.Parse(Console.ReadLine());
@@ -105,7 +105,7 @@ namespace VendingMachine
                 }
                 if (o == 0)
                 {
-                    buyLoop = false;
+                    BuyLoop = false;
                     GetChange();
                     break;
                 }
@@ -113,7 +113,7 @@ namespace VendingMachine
                 try
                 {
                     o--;
-                    string temp = stock[o].name;
+                    var temp = _stock[o].Name;
                 }
                 catch (Exception)
                 {
@@ -121,40 +121,40 @@ namespace VendingMachine
                     break;
                 }
 
-                waitForEntry = true;
-                while (waitForEntry == true)
+                WaitForEntry = true;
+                while (WaitForEntry)
                 {
                     Console.WriteLine("\n1. Buy\n2. Inspect\n3. Don't buy");
-                    Usable usable = stock[o] as Usable;
-                    if (usable != null && stock[o].personalStock > 0)
+                    var usable = _stock[o] as IUsable;
+                    if (usable != null && _stock[o].PersonalStock > 0)
                     {
                         Console.WriteLine("4. Use");
                     }
                     switch (Console.ReadKey(true).Key)
                     {
                         case ConsoleKey.D1:
-                            if (stock[o].storeStock >= 1 && Money >= stock[o].price)
+                            if (_stock[o].StoreStock >= 1 && Money >= _stock[o].Price)
                             {
-                                stock[o].Buy();
-                                Money -= stock[o].price;
+                                _stock[o].Buy();
+                                Money -= _stock[o].Price;
                             }
                             else
                             {
-                                Console.WriteLine("\nYou don't have enough money or {0} is not available", stock[o].name);
+                                Console.WriteLine("\nYou don't have enough money or {0} is not available", _stock[o].Name);
                             }
-                            waitForEntry = false;
+                            WaitForEntry = false;
                             break;
                         case ConsoleKey.D2:
-                            Console.WriteLine(stock[o].Inspect());
+                            Console.WriteLine(_stock[o].Inspect());
                             break;
                         case ConsoleKey.D3:
-                            waitForEntry = false;
+                            WaitForEntry = false;
                             break;
                         case ConsoleKey.D4:
-                            if (usable != null && stock[o].personalStock > 0)
+                            if (usable != null && _stock[o].PersonalStock > 0)
                             {
                                 usable.Use();
-                                waitForEntry = false;
+                                WaitForEntry = false;
                             }
                             break;
                     }
@@ -169,14 +169,11 @@ namespace VendingMachine
 
 
         }
-        private string InspectItem(int o)
-        {
-            return string.Format("\n{0}:\n{1}\nPrice: {2}\nAvailable: {3}", stock[o].name, stock[o].description, stock[o].price, stock[o].storeStock);
-        }
+
         public void Menu()
         {
-            vendLoop = true;
-            while (vendLoop == true)
+            VendLoop = true;
+            while (VendLoop)
             {
                 Console.Clear();
                 Console.WriteLine(GetMenuText());
@@ -189,7 +186,7 @@ namespace VendingMachine
                         InsertMoney();
                         break;
                     case ConsoleKey.D3:
-                        vendLoop = false;
+                        VendLoop = false;
                         GetChange();
                         break;
 
@@ -201,8 +198,8 @@ namespace VendingMachine
         public void InsertMoney()
         {
             Console.Write("Enter an amount: ");
-            string amountString = Console.ReadLine();
-            int amount = 0;
+            var amountString = Console.ReadLine();
+            var amount = 0;
             try
             {
                 amount = int.Parse(amountString);
@@ -211,7 +208,7 @@ namespace VendingMachine
             {
 
             }
-            if (Array.Exists(acceptedAmount, element => element == amount))
+            if (Array.Exists(_acceptedAmount, element => element == amount))
             {
                 Money += amount;
                 Console.WriteLine("{0:C} was added to your balance", amount);
@@ -220,11 +217,7 @@ namespace VendingMachine
             else
             {
                 Console.Write("Enter a correct amount. Valid amounts: ");
-                string errorMessage = "";
-                foreach (int c in acceptedAmount)
-                {
-                    errorMessage += string.Format("{0},", c);
-                }
+                var errorMessage = _acceptedAmount.Aggregate("", (current, c) => current + $"{c},");
                 errorMessage = errorMessage.Remove(errorMessage.Length - 1);
                 errorMessage += "\nPress any key to go back to the menu";
                 Console.WriteLine(errorMessage);
@@ -236,12 +229,12 @@ namespace VendingMachine
 
         public string GetMenuText()
         {
-            return string.Format("1.Buy\n2.Insert money\n3.Leave\n\nMoney: {0}", Money);
+            return $"1.Buy\n2.Insert money\n3.Leave\n\nMoney: {Money}";
         }
 
-        public void Buy(Product _product)
+        public void Buy(IProduct product)
         {
-            _product.Buy();
+            product.Buy();
         }
 
     }

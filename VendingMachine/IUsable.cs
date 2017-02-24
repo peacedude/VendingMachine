@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VendingMachine
 {
-    interface Usable
+    public interface IUsable
     {
         void Use();
     }

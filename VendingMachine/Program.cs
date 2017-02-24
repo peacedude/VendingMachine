@@ -10,7 +10,7 @@ namespace VendingMachine
     {
         static void Main(string[] args)
         {
-            Vending vending = new Vending();
+            var vending = new Vending();
             vending.Menu();
         }
     }

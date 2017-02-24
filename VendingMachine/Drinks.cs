@@ -6,43 +6,46 @@ using System.Threading.Tasks;
 
 namespace VendingMachine
 {
-    class Drinks : Product, Usable
+    public class Drinks : IProduct, IUsable
     {
-        public int centi { get; set; }
-        public int price { get; set; }
-        public int personalStock { get; set; }
-        public int storeStock { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
+        public int Centi { get; set; }
+        public int Price { get; set; }
+        public int PersonalStock { get; set; }
+        public int StoreStock { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
 
-        readonly int[] maxMinCenti = new int[] { 33, 50 };
+        private readonly int[] _maxMinCenti = new int[] { 33, 50 };
 
-        public Drinks(string _name, string _description, int _price)
+        public Drinks(string name, string description, int price)
         {
             var rnd = new Random(Guid.NewGuid().GetHashCode());
-            centi = maxMinCenti[rnd.Next(0,1)];
-            price = _price;
-            name = _name;
-            description = _description;
-            personalStock = 0;
-            storeStock = rnd.Next(1, 6);
+            Centi = _maxMinCenti[rnd.Next(0,1)];
+            Price = price;
+            Name = name;
+            Description = description;
+            PersonalStock = 0;
+            StoreStock = rnd.Next(1, 6);
         }
 
         public void Use()
         {
-            Console.WriteLine("You drank the {0}", name);
-            personalStock--;
+            Console.WriteLine("You drank the {0}", Name);
+            PersonalStock--;
         }
 
         public void Buy()
         {
-            Console.WriteLine("You bought the drink {0} for the price {1:C}", name, price);
-            storeStock--;
-            personalStock++;
+            Console.WriteLine("You bought the drink {0} for the price {1:C}", Name, Price);
+            StoreStock--;
+            PersonalStock++;
         }
         public string Inspect()
         {
-            return string.Format("\nName: {0}\nDescription: {1}\nVolume: {2}cl\nPrice: {3}\nAvailable: {4}", name, description, centi, price, storeStock);
+            return
+                $"\nName: {Name}\nDescription: {Description}\nVolume: {Centi}cl\nPrice: {Price}\nAvailable: {StoreStock}";
         }
+
+        
     }
 }
