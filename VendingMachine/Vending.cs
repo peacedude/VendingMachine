@@ -14,6 +14,7 @@ namespace VendingMachine
 
         private const int NumberOfDrinks = 4;
         private const int NumberOfFood = 5;
+        private const int MaxMoney = 100000;
         private int Money { get; set; }
         private bool VendLoop { get; set; }
         private bool BuyLoop { get; set; }
@@ -183,7 +184,13 @@ namespace VendingMachine
                         BuyMenu();
                         break;
                     case ConsoleKey.D2:
-                        InsertMoney();
+                        if(Money < 100000)
+                            InsertMoney();
+                        else
+                        {
+                            Console.WriteLine("Can't insert more money. Limit: {0:C0}",MaxMoney);
+                            Console.ReadKey(true);
+                        }
                         break;
                     case ConsoleKey.D3:
                         VendLoop = false;
