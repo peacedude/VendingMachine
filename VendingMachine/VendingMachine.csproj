@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Drinks.cs" />
     <Compile Include="Food.cs" />
+    <Compile Include="Stuff.cs" />
+    <Compile Include="Usable.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Vending.cs" />
     <Compile Include="Program.cs" />

@@ -15,6 +15,6 @@ namespace VendingMachine
         string description { get; set; }
         
         void Buy();
-        void Use();
+        string Inspect();
     }
 }

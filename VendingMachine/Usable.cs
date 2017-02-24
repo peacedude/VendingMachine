@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace VendingMachine
 {
-    class Program
+    interface Usable
     {
-        static void Main(string[] args)
-        {
-            Vending vending = new Vending();
-            vending.Menu();
-        }
+        void Use();
     }
 }
