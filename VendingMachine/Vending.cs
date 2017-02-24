@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 
@@ -90,7 +86,6 @@ namespace VendingMachine
         public void SelectItem()
         {
             Console.Write("Enter your selection. Type '0' to leave: ");
-
             while (true)
             {
                 int o;
@@ -114,7 +109,7 @@ namespace VendingMachine
                 try
                 {
                     o--;
-                    var temp = _stock[o].Name;
+                    _stock[o].Name = _stock[o].Name;
                 }
                 catch (Exception)
                 {
