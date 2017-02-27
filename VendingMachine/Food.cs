@@ -13,7 +13,7 @@ namespace VendingMachine
 
         protected void CreateProduct(string name, string description, int price, int gram)
         {
-            base.CreateProduct(name, description, price);
+            CreateProduct(name, description, price);
             Gram = gram;
         }
 

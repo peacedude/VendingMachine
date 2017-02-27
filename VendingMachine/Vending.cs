@@ -29,17 +29,18 @@ namespace VendingMachine
             var pepsi = new Drinks("Pepsi", "Brun dryck", 5);
             var zingo = new Drinks("Zingo", "Orange dryck", 5);
 
-            var baguette = new Food("Baguette", "Långt bröd med ost", 200, 20);
-            var kycklingspett = new Food("Kycklingspett", "Kyckligng på spett", 120, 30);
+            var baguette = new Food("Baguette", "Långt bröd med ost", 20, 200);
+            var kycklingspett = new Food("Kycklingspett", "Kyckligng på spett", 30, 120);
             var rakburk = new Food("Räkburk", "Burk med räkor", 500, 100);
-            var smorgastarta = new Food("Smörgåstårta", "Smörgås i lager", 1000, 195);
-            var paj = new Food("Paj", "Ost och skinkpaj", 200, 30);
+            var smorgastarta = new Food("Smörgåstårta", "Smörgås i lager", 195, 1000);
+            var paj = new Food("Paj", "Ost och skinkpaj", 30, 200);
 
-            var sten = new Stuff("Sten", "Vanlig sten", 20, 1);
-            var diamant = new Stuff("Diamant", "Dyr sten", 10, 9999);
+            var sten = new Stuff("Sten", "Vanlig sten", 1, 20);
+            var diamant = new Stuff("Diamant", "Dyr sten", 9999, 10);
+            var skruv = new Stuff("Skruv", "Vanlig skruv", 1, 5);
+            var borrmaskin = new Stuff("Borrmaskin", "Maskin att borra med", 595, 2052);
 
-            _stock = new IProduct[] { cola, fanta, pepsi, zingo, baguette, kycklingspett, rakburk, smorgastarta, paj, sten, diamant };
-
+            _stock = new IProduct[] { cola, fanta, pepsi, zingo, baguette, kycklingspett, rakburk, smorgastarta, paj, sten, diamant, skruv, borrmaskin };
         }
 
 
