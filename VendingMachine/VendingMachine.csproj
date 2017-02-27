@@ -48,6 +48,7 @@
     <Compile Include="Stuff.cs" />
     <Compile Include="IUsable.cs" />
     <Compile Include="IProduct.cs" />
+    <Compile Include="Product.cs" />
     <Compile Include="Vending.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
