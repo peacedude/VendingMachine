@@ -23,7 +23,7 @@ namespace VendingMachine
 
         public new void Buy()
         {
-            Console.WriteLine("You bought the game {0} for the price {1:C}.", Name, Price);
+            Console.WriteLine("\nYou bought the game {0} for the price {1:C}.", Name, Price);
             base.Buy();
         }
 

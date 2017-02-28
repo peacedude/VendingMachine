@@ -34,13 +34,13 @@ namespace VendingMachine
             Console.Clear();
             Console.WriteLine("|─────────────────────|");
             Console.WriteLine($"|    You got {Money,-9:C0}|");
-            Console.WriteLine("|─────────────────────|────────────────────────────────────────────────|");
             var itemsExist = 0;
             foreach (var x in Stock)
                 if (x.StoreStock > 0)
                     itemsExist++;
             if (itemsExist > 0)
             {
+                Console.WriteLine("|─────────────────────|────────────────────────────────────────────────|");
                 Console.WriteLine("|       Name          |     Price        |  Availability   |  You own  |");
                 Console.WriteLine("|─────────────────────|──────────────────|─────────────────|───────────|");
                 Console.WriteLine("|                     |                  |                 |           |");
@@ -60,12 +60,14 @@ namespace VendingMachine
                         9 <= i
                             ? $"|{i + 1}. {Stock[i].Name,-16} |     {Stock[i].Price,-10:C0}   |        {Stock[i].StoreStock,-8} |     {Stock[i].PersonalStock}     |"
                             : $"|{i + 1}. {Stock[i].Name,-17} |     {Stock[i].Price,-10:C0}   |        {Stock[i].StoreStock,-8} |     {Stock[i].PersonalStock}     |");
+                Console.WriteLine("|_____________________|__________________|_________________|___________|");
             }
             else
             {
+                Console.WriteLine("|──────────────────────────────────────────────────────────────────────|");
                 Console.WriteLine("|--------------------------NO ITEMS AVAILABLE--------------------------|");
+                Console.WriteLine("|______________________________________________________________________|");
             }
-            Console.WriteLine("|_____________________|__________________|_________________|___________|");
         }
 
         /// <summary>

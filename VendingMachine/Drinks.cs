@@ -15,7 +15,7 @@ namespace VendingMachine
 
         public void Use()
         {
-            Console.WriteLine("You drank the {0}.", Name);
+            Console.WriteLine("\nYou drank the {0}.", Name);
             PersonalStock--;
         }
 
@@ -28,7 +28,7 @@ namespace VendingMachine
 
         public new void Buy()
         {
-            Console.WriteLine("You bought the drink {0} for the price {1:C}.", Name, Price);
+            Console.WriteLine("\nYou bought the drink {0} for the price {1:C}.", Name, Price);
             base.Buy();
         }
 
