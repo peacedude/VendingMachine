@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Drinks.cs" />
     <Compile Include="Food.cs" />
+    <Compile Include="Games.cs" />
     <Compile Include="Stuff.cs" />
     <Compile Include="IUsable.cs" />
     <Compile Include="IProduct.cs" />
@@ -52,6 +53,8 @@
     <Compile Include="Vending.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VendingFirst.cs" />
+    <Compile Include="VendingGames.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
