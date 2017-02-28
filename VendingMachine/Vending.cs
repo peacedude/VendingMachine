@@ -35,44 +35,41 @@ namespace VendingMachine
             Console.Clear();
             Console.WriteLine("|─────────────────────|");
             Console.WriteLine($"|    You got {Money,-9:C0}|");
-            
+
             foreach (var x in Stock)
                 if (x.StoreStock > 0)
                 {
                     ItemsExist = true;
                     break;
                 }
-                    
-                    
+
+
             if (ItemsExist)
             {
-                Console.WriteLine("|─────────────────────|────────────────────────────────────────────────|");
-                Console.WriteLine("|       Name          |     Price        |  Availability   |  You own  |");
-                Console.WriteLine("|─────────────────────|──────────────────|─────────────────|───────────|");
-                Console.WriteLine("|                     |                  |                 |           |");
+                Console.WriteLine(TopPartMenu());
+
                 for (var i = 0; i < NumberOfFirst; i++)
                     Console.WriteLine(
                         $"|{i + 1}. {Stock[i].Name,-17} |     {Stock[i].Price,-10:C0}   |        {Stock[i].StoreStock,-8} |     {Stock[i].PersonalStock}     |");
-                Console.WriteLine("|_____________________|__________________|_________________|___________|");
-                Console.WriteLine("|                     |                  |                 |           |");
+
+                Console.WriteLine(MiddlePartMenu());
+
                 for (var i = NumberOfFirst; i < NumberOfSecond + NumberOfFirst; i++)
                     Console.WriteLine(
                         $"|{i + 1}. {Stock[i].Name,-17} |     {Stock[i].Price,-10:C0}   |        {Stock[i].StoreStock,-8} |     {Stock[i].PersonalStock}     |");
-                Console.WriteLine("|_____________________|__________________|_________________|___________|");
-                Console.WriteLine("|                     |                  |                 |           |");
+
+                Console.WriteLine(MiddlePartMenu());
 
                 for (var i = NumberOfThird; i < Stock.Length; i++)
                     Console.WriteLine(
                         9 <= i
                             ? $"|{i + 1}. {Stock[i].Name,-16} |     {Stock[i].Price,-10:C0}   |        {Stock[i].StoreStock,-8} |     {Stock[i].PersonalStock}     |"
                             : $"|{i + 1}. {Stock[i].Name,-17} |     {Stock[i].Price,-10:C0}   |        {Stock[i].StoreStock,-8} |     {Stock[i].PersonalStock}     |");
-                Console.WriteLine("|_____________________|__________________|_________________|___________|");
+                Console.WriteLine(BottomPartMenu());
             }
             else
             {
-                Console.WriteLine("|──────────────────────────────────────────────────────────────────────|");
-                Console.WriteLine("|--------------------------NO ITEMS AVAILABLE--------------------------|");
-                Console.WriteLine("|______________________________________________________________________|");
+                Console.WriteLine(NoItemMenu());
             }
         }
 
@@ -161,7 +158,6 @@ namespace VendingMachine
 
                     WaitForEntry = true;
                     while (WaitForEntry)
-                    {
                         if (true)
                         {
                             Console.WriteLine("\n1. Buy\n2. Inspect\n3. Don't buy");
@@ -195,7 +191,6 @@ namespace VendingMachine
                                     break;
                             }
                         }
-                    }
                     break;
                 }
             }
@@ -230,6 +225,32 @@ namespace VendingMachine
                         break;
                 }
             }
+        }
+
+        protected string TopPartMenu()
+        {
+            return "|─────────────────────|────────────────────────────────────────────────|\n" +
+                   "|       Name          |     Price        |  Availability   |  You own  |\n" +
+                   "|─────────────────────|──────────────────|─────────────────|───────────|\n" +
+                   "|                     |                  |                 |           |";
+        }
+
+        protected string MiddlePartMenu()
+        {
+            return "|_____________________|__________________|_________________|___________|\n" +
+                   "|                     |                  |                 |           |";
+        }
+
+        protected string BottomPartMenu()
+        {
+            return "|_____________________|__________________|_________________|___________|";
+        }
+
+        protected string NoItemMenu()
+        {
+            return "|──────────────────────────────────────────────────────────────────────|\n" +
+                   "|--------------------------NO ITEMS AVAILABLE--------------------------|\n" +
+                   "|______________________________________________________________________|";
         }
 
         protected void InsertMoney()
@@ -306,11 +327,9 @@ namespace VendingMachine
                     else
                     {
                         var games = product as Games;
-                        if (games != null)
-                        {
-                            var inspect = games;
-                            Console.WriteLine(inspect.Inspect());
-                        }
+                        if (games == null) return;
+                        var inspect = games;
+                        Console.WriteLine(inspect.Inspect());
                     }
                 }
             }
