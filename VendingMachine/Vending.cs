@@ -42,8 +42,7 @@ namespace VendingMachine
                     ItemsExist = true;
                     break;
                 }
-
-
+            
             if (ItemsExist)
             {
                 Console.WriteLine(TopPartMenu());
@@ -120,7 +119,7 @@ namespace VendingMachine
             }
             else
             {
-                Console.Write("Enter your selection. Type '0' to leave: ");
+                Console.Write("\nEnter your selection. Type '0' to leave: ");
                 while (true)
                 {
                     int o;
@@ -229,7 +228,7 @@ namespace VendingMachine
 
         protected string TopPartMenu()
         {
-            return "|─────────────────────|────────────────────────────────────────────────|\n" +
+            return "|─────────────────────|──────────────────|─────────────────|───────────|\n" +
                    "|       Name          |     Price        |  Availability   |  You own  |\n" +
                    "|─────────────────────|──────────────────|─────────────────|───────────|\n" +
                    "|                     |                  |                 |           |";
