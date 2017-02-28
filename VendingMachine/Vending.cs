@@ -18,6 +18,7 @@ namespace VendingMachine
         protected bool VendLoop { get; set; }
         protected bool BuyLoop { get; set; }
         protected bool WaitForEntry { get; set; }
+        protected bool ItemsExist { get; set; }
 
         protected void BuyMenu()
         {
@@ -34,11 +35,16 @@ namespace VendingMachine
             Console.Clear();
             Console.WriteLine("|─────────────────────|");
             Console.WriteLine($"|    You got {Money,-9:C0}|");
-            var itemsExist = 0;
+            
             foreach (var x in Stock)
                 if (x.StoreStock > 0)
-                    itemsExist++;
-            if (itemsExist > 0)
+                {
+                    ItemsExist = true;
+                    break;
+                }
+                    
+                    
+            if (ItemsExist)
             {
                 Console.WriteLine("|─────────────────────|────────────────────────────────────────────────|");
                 Console.WriteLine("|       Name          |     Price        |  Availability   |  You own  |");
@@ -109,76 +115,89 @@ namespace VendingMachine
         /// </summary>
         protected void SelectItem()
         {
-            Console.Write("Enter your selection. Type '0' to leave: ");
-            while (true)
+            if (!ItemsExist)
             {
-                int o;
-                try
+                Console.Write("Press any key to return to menu....");
+                Console.ReadKey(true);
+                BuyLoop = false;
+            }
+            else
+            {
+                Console.Write("Enter your selection. Type '0' to leave: ");
+                while (true)
                 {
-                    o = int.Parse(Console.ReadLine());
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Enter a valid item number..");
-                    break;
-                }
-                if (o == 0)
-                {
-                    BuyLoop = false;
-                    GetChange();
-                    Console.WriteLine(GetBoughtItems());
-                    if (GetBoughtItems().Contains("You left with"))
-                        Console.ReadKey(true);
-                    foreach (var t in Stock)
-                        t.PersonalStock = 0;
-                    break;
-                }
-
-                try
-                {
-                    o--;
-                    Stock[o].Name = Stock[o].Name;
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Enter a valid item number..");
-                    break;
-                }
-
-                WaitForEntry = true;
-                while (WaitForEntry)
-                {
-                    Console.WriteLine("\n1. Buy\n2. Inspect\n3. Don't buy");
-                    var usable = Stock[o] as IUsable;
-                    if (usable != null && Stock[o].PersonalStock > 0)
-                        Console.WriteLine("4. Use");
-                    switch (Console.ReadKey(true).Key)
+                    int o;
+                    try
                     {
-                        case ConsoleKey.D1:
-                            if (Stock[o].StoreStock >= 1 && Money >= Stock[o].Price)
-                                Buy(Stock[o]);
-                            else
-                                Console.WriteLine($"\nYou don't have enough money or {Stock[o].Name} is not available");
-                            WaitForEntry = false;
-                            Console.ReadKey(true);
-                            break;
-                        case ConsoleKey.D2:
-                            Inspect(Stock[o]);
-                            break;
-                        case ConsoleKey.D3:
-                            WaitForEntry = false;
-                            break;
-                        case ConsoleKey.D4:
-                            if (usable != null && Stock[o].PersonalStock > 0)
-                            {
-                                usable.Use();
-                                WaitForEntry = false;
-                            }
-                            Console.ReadKey(true);
-                            break;
+                        o = int.Parse(Console.ReadLine());
                     }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("Enter a valid item number..");
+                        break;
+                    }
+                    if (o == 0)
+                    {
+                        BuyLoop = false;
+                        GetChange();
+                        Console.WriteLine(GetBoughtItems());
+                        if (GetBoughtItems().Contains("You left with"))
+                            Console.ReadKey(true);
+                        foreach (var t in Stock)
+                            t.PersonalStock = 0;
+                        break;
+                    }
+
+                    try
+                    {
+                        o--;
+                        Stock[o].Name = Stock[o].Name;
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("Enter a valid item number..");
+                        break;
+                    }
+
+                    WaitForEntry = true;
+                    while (WaitForEntry)
+                    {
+                        if (true)
+                        {
+                            Console.WriteLine("\n1. Buy\n2. Inspect\n3. Don't buy");
+                            var usable = Stock[o] as IUsable;
+                            if (usable != null && Stock[o].PersonalStock > 0)
+                                Console.WriteLine("4. Use");
+                            switch (Console.ReadKey(true).Key)
+                            {
+                                case ConsoleKey.D1:
+                                    if (Stock[o].StoreStock >= 1 && Money >= Stock[o].Price)
+                                        Buy(Stock[o]);
+                                    else
+                                        Console.WriteLine(
+                                            $"\nYou don't have enough money or {Stock[o].Name} is not available");
+                                    WaitForEntry = false;
+                                    Console.ReadKey(true);
+                                    break;
+                                case ConsoleKey.D2:
+                                    Inspect(Stock[o]);
+                                    break;
+                                case ConsoleKey.D3:
+                                    WaitForEntry = false;
+                                    break;
+                                case ConsoleKey.D4:
+                                    if (usable != null && Stock[o].PersonalStock > 0)
+                                    {
+                                        usable.Use();
+                                        WaitForEntry = false;
+                                    }
+                                    Console.ReadKey(true);
+                                    break;
+                            }
+                        }
+                    }
+                    break;
                 }
-                break;
             }
         }
 

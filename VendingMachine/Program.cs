@@ -17,6 +17,10 @@ namespace VendingMachine
                 Thread.Sleep(1000);
             }
 
+            var vendingFirst = new VendingFirst();
+            var vendingGames = new VendingGames();
+            var vendingEmpty = new VendingEmpty();
+
             while (vendingLoop)
             {
                 Console.Clear();
@@ -25,15 +29,12 @@ namespace VendingMachine
                 switch (Console.ReadKey(true).Key)
                 {
                     case ConsoleKey.D1:
-                        var vendingFirst = new VendingFirst();
                         vendingFirst.Menu();
                         break;
                     case ConsoleKey.D2:
-                        var vendingGames = new VendingGames();
                         vendingGames.Menu();
                         break;
                     case ConsoleKey.D3:
-                        var vendingEmpty = new VendingEmpty();
                         vendingEmpty.Menu();
                         break;
                     case ConsoleKey.D0:
