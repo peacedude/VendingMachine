@@ -10,17 +10,6 @@ namespace VendingMachine
         public string Name { get; set; }
         public string Description { get; set; }
 
-
-        protected void CreateProduct(string name, string description, int price)
-        {
-            var rnd = new Random(Guid.NewGuid().GetHashCode());
-            Price = price;
-            Name = name;
-            Description = description;
-            PersonalStock = 0;
-            StoreStock = rnd.Next(1, 6);
-        }
-
         public void Buy()
         {
             StoreStock--;
@@ -30,6 +19,17 @@ namespace VendingMachine
         public string Inspect()
         {
             return $"\nName: {Name}\nDescription: {Description}\nPrice: {Price:C}\nAvailable: {StoreStock}";
+        }
+
+
+        protected void CreateProduct(string name, string description, int price)
+        {
+            var rnd = new Random(Guid.NewGuid().GetHashCode());
+            Price = price;
+            Name = name;
+            Description = description;
+            PersonalStock = 0;
+            StoreStock = rnd.Next(1, 6);
         }
     }
 }

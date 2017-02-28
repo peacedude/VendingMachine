@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VendingMachine
+﻿namespace VendingMachine
 {
-    class VendingGames : Vending
+    internal class VendingGames : Vending
     {
-
         public VendingGames()
         {
             var doom = new Games("Doom", "Döda demoner", 599);
@@ -24,7 +17,7 @@ namespace VendingMachine
             NumberOfSecond = 2;
             NumberOfThird = NumberOfFirst + NumberOfSecond;
 
-            Stock = new IProduct[] { doom, csgo, wow, eve, sims, city };
+            Stock = new IProduct[] {doom, csgo, wow, eve, sims, city};
         }
     }
 }

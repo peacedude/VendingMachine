@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VendingMachine
 {
     internal class Games : Product
     {
-        public double Rating { get; set; }
-
         public Games(string name, string description, int price)
         {
             CreateProduct(name, description, price);
         }
+
+        public double Rating { get; set; }
 
         public new void CreateProduct(string name, string description, int price)
         {
@@ -27,7 +23,7 @@ namespace VendingMachine
 
         public new void Buy()
         {
-            Console.WriteLine("You bought the game {0} for the price {1:C}", Name, Price);
+            Console.WriteLine("You bought the game {0} for the price {1:C}.", Name, Price);
             base.Buy();
         }
 

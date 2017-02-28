@@ -4,12 +4,12 @@ namespace VendingMachine
 {
     public class Stuff : Product
     {
-        public int Gram { get; set; }
-
         public Stuff(string name, string description, int price, int gram)
         {
             CreateProduct(name, description, price, gram);
         }
+
+        public int Gram { get; set; }
 
         protected void CreateProduct(string name, string description, int price, int gram)
         {
@@ -19,7 +19,7 @@ namespace VendingMachine
 
         public new void Buy()
         {
-            Console.WriteLine("\nYou bought the item {0} for the price {1:C}", Name, Price);
+            Console.WriteLine("\nYou bought the item {0} for the price {1:C}.", Name, Price);
             base.Buy();
         }
 

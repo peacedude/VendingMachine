@@ -1,10 +1,7 @@
-﻿using System;
-
-namespace VendingMachine
+﻿namespace VendingMachine
 {
     internal class VendingFirst : Vending
     {
-
         public VendingFirst()
         {
             var cola = new Drinks("Cola", "Brun dryck", 5);
@@ -27,7 +24,11 @@ namespace VendingMachine
             NumberOfSecond = 5;
             NumberOfThird = NumberOfFirst + NumberOfSecond;
 
-            Stock = new IProduct[] { cola, fanta, pepsi, zingo, baguette, kycklingspett, rakburk, smorgastarta, paj, sten, diamant, skruv, borrmaskin };
+            Stock = new IProduct[]
+            {
+                cola, fanta, pepsi, zingo, baguette, kycklingspett, rakburk, smorgastarta, paj, sten, diamant, skruv,
+                borrmaskin
+            };
         }
     }
 }
